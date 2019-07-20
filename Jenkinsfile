@@ -5,5 +5,5 @@ library identifier: 'BattlePipelineLib@master', retriever: modernSCM(
 
 compileAndDeployMaven {
     repo = 'WorldGuardUtil'
-    target_path = 'modules/WorldGuardUtil/
+    target_path = 'modules/WorldGuardUtil/'
 }
