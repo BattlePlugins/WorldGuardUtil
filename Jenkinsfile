@@ -3,4 +3,7 @@ library identifier: 'BattlePipelineLib@master', retriever: modernSCM(
      remote: 'https://@github.com/BattlePlugins/BattlePipelineLib',
      credentialsId: 'github-login'])
 
-compileAndDeployMaven {repo = 'WorldGuardUtil'}
+compileAndDeployMaven {
+    repo = 'WorldGuardUtil'
+    target_path = 'modules/WorldGuardUtil/
+}
