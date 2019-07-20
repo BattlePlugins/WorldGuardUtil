@@ -7,6 +7,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.battleplugins.worldguardutil.WorldGuardInterface;
 import org.battleplugins.worldguardutil.exception.RegionNotFoundException;
 import org.battleplugins.worldguardutil.math.BlockSelection;
+import org.battleplugins.worldguardutil.region.ProtectedArenaRegion;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -127,6 +128,16 @@ public class WG extends WorldGuardInterface {
     @Override
     public int regionCount() {
         return 0;
+    }
+
+    @Override
+    public ProtectedArenaRegion getContainingRegion(Location loc) {
+        return null;
+    }
+
+    @Override
+    public BlockSelection getBlockSelection(ProtectedArenaRegion region) {
+        return null;
     }
 
     @Override

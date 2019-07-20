@@ -11,6 +11,7 @@ import org.battleplugins.worldguardutil.math.BlockSelection;
 import mc.euro.version.FieldTester;
 import mc.euro.version.Version;
 import mc.euro.version.VersionFactory;
+import org.battleplugins.worldguardutil.region.ProtectedArenaRegion;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -31,7 +32,7 @@ public abstract class WorldGuardInterface {
     /**
      * Instantiates: org.battleplugins.worldguardutil.worldguard.{version}.WG.
      *
-     * Based on the version of WorldEdit that the server has.
+     * Based on the version of WorldGuard that the server has.
      */
     public static WorldGuardInterface newInstance() {
         WorldGuardInterface WGI = null;
@@ -113,6 +114,10 @@ public abstract class WorldGuardInterface {
     public abstract boolean trackRegion(String world, String id) throws RegionNotFoundException;
 
     public abstract int regionCount();
+
+    public abstract ProtectedArenaRegion getContainingRegion(Location loc);
+
+    public abstract BlockSelection getBlockSelection(ProtectedArenaRegion region);
 
     public abstract BlockSelection getBlockSelection(Region region);
 

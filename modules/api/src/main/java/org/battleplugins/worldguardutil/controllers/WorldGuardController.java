@@ -7,6 +7,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.battleplugins.worldguardutil.WorldGuardInterface;
 import org.battleplugins.worldguardutil.exception.RegionNotFoundException;
 import org.battleplugins.worldguardutil.math.BlockSelection;
+import org.battleplugins.worldguardutil.region.ProtectedArenaRegion;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -62,8 +63,14 @@ public class WorldGuardController {
         wg.updateProtectedRegion(p, id);
     }
 
-    public static void createProtectedRegion(Player p, String id) throws Exception {
+    public static ProtectedArenaRegion createProtectedRegion(Player p, String id) throws Exception {
         wg.createProtectedRegion(p, id);
+        return wg.hasRegion(p.getWorld(), id)
+                ? new ProtectedArenaRegion(id, p.getWorld()) : null;
+    }
+
+    public static void clearRegion(ProtectedArenaRegion region) {
+        clearRegion(region.getWorld().getName(), region.getID());
     }
 
     public static void clearRegion(String world, String id) {
@@ -84,6 +91,10 @@ public class WorldGuardController {
         return hasWorldEdit;
     }
 
+    public static boolean setFlag(ProtectedArenaRegion region, String flag, boolean enable) {
+        return setFlag(region.getWorld().getName(), region.getID(), flag, enable);
+    }
+
     public static boolean setFlag(String worldName, String id, String flag, boolean enable) {
         return wg.setFlag(worldName, id, flag, enable);
     }
@@ -100,12 +111,24 @@ public class WorldGuardController {
         wg.allowEntry(player, regionWorld, id);
     }
 
-    public static void addMember(String playerName, String regionWorld, String id) {
-        wg.addMember(playerName, regionWorld, id);
+    public static boolean addMember(String playerName, ProtectedArenaRegion region) {
+        return addMember(playerName, region.getWorld().getName(), region.getID());
     }
 
-    public static void removeMember(String playerName, String regionWorld, String id) {
-        wg.removeMember(playerName, regionWorld, id);
+    public static boolean addMember(String playerName, String regionWorld, String id) {
+        return wg.addMember(playerName, regionWorld, id);
+    }
+
+    public static boolean removeMember(String playerName, ProtectedArenaRegion region) {
+        return removeMember(playerName, region.getWorld().getName(), region.getID());
+    }
+
+    public static boolean removeMember(String playerName, String regionWorld, String id) {
+        return wg.removeMember(playerName, regionWorld, id);
+    }
+
+    public static void deleteRegion(ProtectedArenaRegion region) {
+        deleteRegion(region.getWorld().getName(), region.getID());
     }
 
     public static void deleteRegion(String worldName, String id) {
@@ -114,6 +137,18 @@ public class WorldGuardController {
 
     public static int regionCount() {
         return wg.regionCount();
+    }
+
+    public static boolean hasPlayer(String playerName, ProtectedArenaRegion region) {
+        return hasPlayer(playerName, region.getWorld().getName(), region.getID());
+    }
+
+    public static boolean hasPlayer(String playerName, String world, String id) {
+        return wg.hasPlayer(playerName, world, id);
+    }
+
+    public static boolean trackRegion(ProtectedArenaRegion region) throws RegionNotFoundException {
+        return wg.trackRegion(region.getWorld().getName(), region.getID());
     }
 
     public static boolean trackRegion(String world, String id) throws RegionNotFoundException {
@@ -126,6 +161,14 @@ public class WorldGuardController {
 
     public static ProtectedRegion getRegion(World world, String id) {
         return wg.getRegion(world, id);
+    }
+
+    public static ProtectedArenaRegion getContainingRegion(Location loc) {
+        return wg.getContainingRegion(loc);
+    }
+
+    public static BlockSelection getBlockSelection(ProtectedArenaRegion region) {
+        return wg.getBlockSelection(region);
     }
 
     public static BlockSelection getBlockSelection(Region region) {

@@ -10,6 +10,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 import org.battleplugins.worldguardutil.controllers.WorldEditController;
 import org.battleplugins.worldguardutil.exception.RegionNotFoundException;
+import org.battleplugins.worldguardutil.math.BlockSelection;
+import org.battleplugins.worldguardutil.region.ProtectedArenaRegion;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -122,6 +124,7 @@ public abstract class WorldGuardAbstraction extends WorldGuardInterface {
         return changeMember(playerName, regionWorld, id, true);
     }
 
+
     @Override
     public boolean removeMember(String playerName, String regionWorld, String id) {
         return changeMember(playerName, regionWorld, id, false);
@@ -195,5 +198,31 @@ public abstract class WorldGuardAbstraction extends WorldGuardInterface {
             }
         }
         return count;
+    }
+
+    @Override
+    public ProtectedArenaRegion getContainingRegion(Location loc) {
+        for (String world : trackedRegions.keySet()) {
+            World w = Bukkit.getWorld(world);
+            if (w == null || loc.getWorld().getUID() != w.getUID()) {
+                continue;
+            }
+            for (String id : trackedRegions.get(world)) {
+                ProtectedRegion pr = getRegion(w, id);
+                if (pr == null) {
+                    continue;
+                }
+                if (pr.contains(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())) {
+                    return new ProtectedArenaRegion(id, w);
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public BlockSelection getBlockSelection(ProtectedArenaRegion region) {
+        ProtectedRegion pr = getRegion(region.getWorld(), region.getID());
+        return getBlockSelection(region.getWorld(), pr);
     }
 }
