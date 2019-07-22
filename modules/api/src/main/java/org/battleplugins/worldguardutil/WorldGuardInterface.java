@@ -58,7 +58,7 @@ public abstract class WorldGuardInterface {
      * Instantiates: org.battleplugins.worldguardutil.worldguard.{version}.WG.
      */
     private static WorldGuardInterface instantiate(String version) {
-        String classPackage = "org.battleplugins.worldguardutil.worldguard" + version + ".WG";
+        String classPackage = "org.battleplugins.worldguardutil.worldguard." + version + ".WG";
         WorldGuardInterface WGI = null;
         Class<?>[] args = {};
         Class clazz = null;
