@@ -1,6 +1,5 @@
 package org.battleplugins.worldguardutil.controllers;
 
-import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldguard.protection.flags.Flag;
 import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
@@ -168,10 +167,6 @@ public class WorldGuardController {
     }
 
     public static BlockSelection getBlockSelection(ProtectedArenaRegion region) {
-        return wg.getBlockSelection(region);
-    }
-
-    public static BlockSelection getBlockSelection(Region region) {
         return wg.getBlockSelection(region);
     }
 
